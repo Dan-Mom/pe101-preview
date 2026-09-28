@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PE101 Course Map — Follow the Money</title>
+<style>
+:root{
+  --ink:#20241F; --paper:#F6F4EF; --card:#ffffff; --line:#E4DFD0;
+  --green:#0F6E56; --green-d:#0B5240; --green-dk:#0E1F1B;
+  --gold:#C9A24B; --gold-soft:#FDF8EE;
+  --mute:#8B8674; --live:#0F6E56; --live-bg:#E1F5EE;
+  --plan:#9A9585; --plan-bg:#F1EFE7;
+  --serif:Georgia,"Times New Roman",serif;
+  --sans:Inter,"Segoe UI",Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:30px 26px 90px}
+
+/* header */
+.head{border-bottom:3px solid var(--gold);padding-bottom:18px;margin-bottom:8px}
+.head h1{font-family:var(--serif);font-size:30px;color:var(--green-dk);font-weight:700;letter-spacing:.01em}
+.head h1 span{color:var(--gold)}
+.head .sub{color:var(--mute);font-size:13.5px;margin-top:6px;max-width:70ch}
+.head .meta{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
+.pill{font-size:11px;padding:3px 10px;border-radius:20px;background:#EFEADA;color:#7A6A3F;border:1px solid #E0D4AE;font-weight:700}
+.pill.live{background:var(--live-bg);color:var(--live);border-color:#BFE6D8}
+
+.hint{font-size:12.5px;color:var(--mute);margin:16px 0 4px}
+
+/* the money river */
+.river{position:relative;margin:14px 0 6px;padding:2px 0}
+.stages{display:grid;grid-template-columns:repeat(8,1fr);gap:6px}
+.stage{position:relative;background:linear-gradient(180deg,#12352C,#0E1F1B);color:#EDE7D6;border-radius:10px;padding:12px 10px 30px;text-align:center;min-height:96px}
+.stage .n{font-family:var(--serif);font-style:italic;font-size:11px;color:var(--gold);opacity:.85}
+.stage .t{font-size:12.5px;font-weight:800;margin-top:3px;line-height:1.25}
+.stage .d{font-size:10.5px;color:#9FB7AD;margin-top:5px;line-height:1.35}
+.stage:after{content:"";position:absolute;right:-11px;top:50%;transform:translateY(-50%);border-left:11px solid var(--green-dk);border-top:9px solid transparent;border-bottom:9px solid transparent;z-index:2}
+.stage:last-child:after{display:none}
+.stage .drop{position:absolute;left:50%;bottom:-14px;transform:translateX(-50%);width:2px;height:14px;background:var(--gold)}
+@media(max-width:820px){.stages{grid-template-columns:repeat(2,1fr)}.stage:after{display:none}.stage .drop{display:none}}
+
+/* parts flow */
+.parts{margin-top:22px;display:flex;flex-direction:column;gap:10px}
+.part{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--green);border-radius:12px;overflow:hidden;transition:.15s}
+.part.p0{border-left-color:var(--gold)}
+.part.lateral{border-left-color:#6E8C81;border-style:dashed}
+.part-hd{display:flex;align-items:center;gap:14px;padding:14px 18px;cursor:pointer;user-select:none}
+.part-hd:hover{background:#FCFAF4}
+.part-badge{font-family:var(--serif);font-weight:700;font-size:15px;color:#fff;background:var(--green);min-width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.part.p0 .part-badge{background:var(--gold)}
+.part.lateral .part-badge{background:#6E8C81}
+.part-title{flex:1}
+.part-title b{font-size:15.5px;color:var(--green-dk);display:block}
+.part-title .flow{font-size:12px;color:var(--mute);margin-top:2px}
+.part-title .flow em{color:var(--gold);font-style:normal;font-weight:700}
+.part-count{font-size:11px;color:var(--mute);white-space:nowrap}
+.part-count .lv{color:var(--live);font-weight:800}
+.chev{color:var(--mute);font-size:13px;transition:.2s;flex-shrink:0}
+.part.open .chev{transform:rotate(90deg)}
+.mods{display:none;padding:2px 18px 16px 66px;gap:8px;flex-wrap:wrap}
+.part.open .mods{display:flex}
+.mod{background:#FBFAF6;border:1px solid var(--line);border-radius:9px;padding:8px 12px;font-size:12.5px;min-width:210px;flex:1 1 240px}
+.mod .mnum{font-family:var(--serif);font-style:italic;color:var(--gold);font-size:11.5px;margin-right:6px}
+.mod .mt{font-weight:700;color:var(--ink)}
+.mod .ms{display:inline-block;font-size:9.5px;font-weight:800;padding:1px 7px;border-radius:10px;margin-left:6px;vertical-align:1px}
+.ms.live{background:var(--live-bg);color:var(--live)}
+.ms.plan{background:var(--plan-bg);color:var(--plan)}
+.mod .mwhy{display:block;color:var(--mute);font-size:11px;margin-top:3px;line-height:1.4}
+
+/* lateral band */
+.lateral-wrap{margin-top:18px;padding:14px 16px;background:#F0F3F1;border:1px dashed #9FB7AD;border-radius:12px}
+.lateral-wrap .lh{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#5C7A6F;font-weight:800;margin-bottom:8px}
+
+.legend{margin-top:26px;display:flex;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--mute);border-top:1px solid var(--line);padding-top:14px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.dot{width:10px;height:10px;border-radius:3px;display:inline-block}
+.foot{margin-top:22px;font-size:12px;color:var(--mute);line-height:1.7}
+.foot a{color:var(--green-d);font-weight:700}
+.controls{margin:10px 0 0}
+.controls button{font:inherit;font-size:12px;font-weight:700;color:var(--green-d);background:#fff;border:1px solid var(--line);border-radius:8px;padding:6px 12px;cursor:pointer}
+.controls button:hover{border-color:var(--gold)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="head">
+    <h1>PE101 · <span>Follow the Money</span></h1>
+    <div class="sub">The whole course on one page. One fictional fund — <b>Stanmere Capital Partners I, L.P.</b> — is carried from the day it forms to the day it winds down. Each Part picks the money up where the last one left it. Click a Part to see its modules.</div>
+    <div class="meta">
+      <span class="pill">8 Parts</span>
+      <span class="pill">22 modules</span>
+      <span class="pill live">22 live</span>
+      <span class="pill">1 case fund, end to end</span>
+    </div>
+  </div>
+
+  <div class="hint">The money's journey — every Part below plugs into one of these eight stages:</div>
+  <div class="river">
+    <div class="stages">
+      <div class="stage"><div class="n">i</div><div class="t">Commitment</div><div class="d">LPs pledge capital to the fund</div><div class="drop"></div></div>
+      <div class="stage"><div class="n">ii</div><div class="t">Capital In</div><div class="d">Calls draw the cash down</div><div class="drop"></div></div>
+      <div class="stage"><div class="n">iii</div><div class="t">Deployed</div><div class="d">Cash buys portfolio companies</div><div class="drop"></div></div>
+      <div class="stage"><div class="n">iv</div><div class="t">Valued</div><div class="d">Positions marked to fair value</div><div class="drop"></div></div>
+      <div class="stage"><div class="n">v</div><div class="t">NAV Struck</div><div class="d">The books close each period</div><div class="drop"></div></div>
+      <div class="stage"><div class="n">vi</div><div class="t">Capital Out</div><div class="d">Exits → waterfall → distributions</div><div class="drop"></div></div>
+      <div class="stage"><div class="n">vii</div><div class="t">Reported</div><div class="d">Statements & investor letters</div><div class="drop"></div></div>
+      <div class="stage"><div class="n">viii</div><div class="t">Assured</div><div class="d">Audit, tax, regulators check it</div></div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button onclick="setAll(true)">Expand all</button>
+    <button onclick="setAll(false)">Collapse all</button>
+  </div>
+
+  <div class="parts" id="parts"></div>
+
+    <div class="legend">
+    <span><i class="dot" style="background:var(--gold)"></i> Part 0 — orientation (before the money moves)</span>
+    <span><i class="dot" style="background:var(--green)"></i> Parts 1–7 — the money's journey, in order</span>
+    <span><i class="dot" style="background:var(--live-bg);border:1px solid var(--live)"></i> live &nbsp; <i class="dot" style="background:var(--plan-bg)"></i> planned</span>
+  </div>
+
+  <div class="foot">
+    Each module answers two questions in plain English: how does the money move at this step, and how is it booked? Every number ties to the Stanmere workbook; the Resources appendix in the reader shows where. Stanmere Capital Partners I, L.P. and every entity named in this course are fictional and were created for instructional purposes; any resemblance to an actual fund, firm or company is coincidental.
+    <br>Open the reader: <a href="index.html">index.html</a>
+  </div>
+
+</div>
+
+<script>
+const PARTS = [
+  { n:"0", cls:"p0", title:"The Map", flow:"Before the money moves — <em>get oriented</em>", mods:[
+    { num:"0.1", t:"What a PE Fund Is", s:"live", why:"Meet the cast once: the fund, the GP, the LPs, the administrator and the auditor, shown through Stanmere Capital Partners I, L.P." },
+    { num:"0.2", t:"Why Fund Accounting Is Different", s:"live", why:"Three differences explain almost everything that looks strange in a fund's books: fair value, no consolidation of portfolio companies, and partners' capital accounts." },
+    { num:"0.3", t:"Follow One Dollar", s:"live", why:"Follow one of Stanmere's dollars through six stops, from commitment to K-1, and meet the ten accounts that carry it." },
+  ]},
+  { n:"1", title:"Birth of a Fund", flow:"Stage i — <em>Commitment</em>", mods:[
+    { num:"1.1", t:"Who's Who: Fund Structures", s:"live", why:"A fund is a small stack of legal entities." },
+    { num:"1.2", t:"Reading the LPA", s:"live", why:"The limited partnership agreement is the fund's rulebook." },
+    { num:"1.3", t:"Startup Costs: Org vs Offering", s:"live", why:"Before the first capital call, a fund already owes for forming itself and for marketing itself." },
+    { num:"1.4", t:"Later Closes & Equalization", s:"live", why:"A partner who joins at a later close still has to fund its share of earlier calls, and pays the first partners for the wait." },
+  ]},
+  { n:"2", title:"Money In", flow:"Stage ii — <em>Capital In</em>", mods:[
+    { num:"2.1", t:"Capital Calls", s:"live", why:"The fund asks its partners for part of what they promised." },
+    { num:"2.2", t:"Management Fees & the Fee Offset", s:"live", why:"The fund pays its manager 2% a year, quarterly in advance, first on commitments and then on invested cost." },
+  ]},
+  { n:"3", title:"Money at Work", flow:"Stage iii–iv — <em>Deployed & Valued</em>", mods:[
+    { num:"3.1", t:"Buying an Investment", s:"live", why:"When the fund buys a company, it books the investment at the price paid." },
+    { num:"3.2", t:"Fair Value Marks", s:"live", why:"Every quarter the fund re-estimates what each investment is worth and books the change as an unrealized gain or loss." },
+    { num:"3.3", t:"Selling: Realized vs Unrealized", s:"live", why:"When the fund sells an investment, the paper gain from its marks reverses, a realized gain takes its place, and cash comes in." },
+  ]},
+  { n:"4", title:"The Engine Room", flow:"Stage v — <em>NAV Struck</em>", mods:[
+    { num:"4.1", t:"The Quarterly Close Cycle", s:"live", why:"Every quarter a fund accountant posts the quarter's activity, marks the portfolio, reconciles, runs the trial balance and computes NAV." },
+    { num:"4.2", t:"Fund Expenses & Accruals", s:"live", why:"A fund pays its own running costs and leaves the manager's overhead to the manager." },
+    { num:"4.3", t:"Partners' Capital Accounts", s:"live", why:"Every partner has a capital account that rolls forward each period, and all of them add up to the fund's net assets." },
+  ]},
+  { n:"5", title:"Money Out", flow:"Stage vi — <em>Capital Out</em>", mods:[
+    { num:"5.1", t:"Distributions", s:"live", why:"The fund pays cash back to its partners." },
+    { num:"5.2", t:"The Waterfall", s:"live", why:"Capital back first, then an 8% preferred return, then the catch-up, then an 80/20 split." },
+    { num:"5.3", t:"Booking Carried Interest", s:"live", why:"Carry is not a fund expense." },
+    { num:"5.4", t:"Winding Up the Fund", s:"live", why:"Sell the last investments, pay the last bills, run the final waterfall and clawback test, and distribute what is left until every account reads zero." },
+  ]},
+  { n:"6", title:"Telling the Story", flow:"Stage vii — <em>Reported</em>", mods:[
+    { num:"6.1", t:"The Fund's Financial Statements", s:"live", why:"A PE fund reports as an investment company: a statement of assets and liabilities, a schedule of investments, a statement of operations, changes in partners' capital and cash flows." },
+    { num:"6.2", t:"Performance & Investor Reports", s:"live", why:"DPI, RVPI, TVPI and IRR in plain English, why an investor's net return is lower than the fund's, and what goes into the quarterly investor package." },
+  ]},
+  { n:"7", title:"Oversight", flow:"Stage viii — <em>Assured</em>", mods:[
+    { num:"7.1", t:"Year-End: Audit and K-1s", s:"live", why:"What the auditor tests in a PE fund, what the fund accountant prepares for it, and why the fund pays no income tax but sends every partner a K-1." },
+  ]},
+];
+const LATERAL = [];
+
+function modHTML(m){
+  const s = m.s === "live" ? "live" : "plan";
+  const lbl = m.s === "live" ? "live" : (m.s === "legacy" ? "draft" : "planned");
+  return '<div class="mod"><span class="mnum">'+m.num+'</span><span class="mt">'+m.t+'</span>'+
+         '<span class="ms '+s+'">'+lbl+'</span><span class="mwhy">'+m.why+'</span></div>';
+}
+function partHTML(p){
+  const live = p.mods.filter(m=>m.s==="live").length;
+  const cls = "part " + (p.cls||"");
+  return '<div class="'+cls+'" data-part="'+p.n+'">'+
+    '<div class="part-hd" onclick="toggle(this)">'+
+      '<div class="part-badge">'+p.n+'</div>'+
+      '<div class="part-title"><b>Part '+p.n+' · '+p.title+'</b><span class="flow">'+p.flow+'</span></div>'+
+      '<div class="part-count"><span class="lv">'+live+'</span>/'+p.mods.length+' live</div>'+
+      '<div class="chev">▶</div>'+
+    '</div>'+
+    '<div class="mods">'+p.mods.map(modHTML).join('')+'</div>'+
+  '</div>';
+}
+document.getElementById("parts").innerHTML = PARTS.map(partHTML).join('');
+
+function toggle(hd){ hd.parentElement.classList.toggle("open"); }
+function setAll(open){ document.querySelectorAll(".part").forEach(p=>p.classList.toggle("open", open)); }
+// open Part 0 + Part 5 (the live ones) by default so it doesn't look empty
+document.querySelectorAll('.part[data-part="0"], .part[data-part="5"]').forEach(p=>p.classList.add("open"));
+</script>
+</body>
+</html>
